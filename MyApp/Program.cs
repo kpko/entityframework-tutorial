@@ -19,17 +19,9 @@ namespace MyApp
                 Console.WriteLine(s);
             };
 
-            var contacts = ctx.Contacts.ToList();
-
-
-            Contact myContact = new Contact();
-            myContact.FirstName = "Daisy";
-            myContact.LastName = "Duck";
-
-            ctx.Contacts.Add(myContact);
+            var contacts = ctx.Contacts.Where(c => c.FirstName == "Daisy");
+            ctx.Contacts.RemoveRange(contacts);
             ctx.SaveChanges();
-
-            contacts = ctx.Contacts.ToList();
 
         }
     }
@@ -44,5 +36,10 @@ namespace MyApp
     class ContactsDB : DbContext
     {
         public DbSet<Contact> Contacts { get; set; }
+
+        public ContactsDB() : base("name=ContactsDatenbank")
+        {
+
+        }
     }
 }
