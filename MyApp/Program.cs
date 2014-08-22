@@ -19,10 +19,13 @@ namespace MyApp
                 Console.WriteLine(s);
             };
 
-            var contacts = ctx.Contacts.Where(c => c.FirstName == "Daisy");
-            ctx.Contacts.RemoveRange(contacts);
-            ctx.SaveChanges();
+            var contact = ctx.Contacts.FirstOrDefault(c => c.FirstName == "Steffen");
 
+            if (contact != null)
+            {
+                contact.FirstName = "Donald";
+                ctx.SaveChanges();
+            }
         }
     }
 
@@ -37,7 +40,8 @@ namespace MyApp
     {
         public DbSet<Contact> Contacts { get; set; }
 
-        public ContactsDB() : base("name=ContactsDatenbank")
+        public ContactsDB()
+            : base("name=ContactsDatenbank")
         {
 
         }
